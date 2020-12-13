@@ -1,0 +1,257 @@
+---
+title: "dry bean prediction project"
+author: "Magnus WOod"
+class: "CPT_S 575 Data Science"
+output: html_notebook
+---
+
+
+
+```{r}
+# load libraries
+library(tidyverse)
+library(broom)
+library(knitr)
+library(ggfortify)
+library(caret)
+
+# import the data
+drybean <- read.csv("Bean_Othello_Jul21_M10_transparent_reflectance_hyperindices.csv")
+
+```
+
+```{r}
+# predicting YIELD
+drybean.sub <- drybean %>%
+  select(kgha, ends_with("_mean")) %>%
+  na.omit()
+
+
+
+
+# where are the coefficients NA. We will remove these from the model
+drybean.reduced <- drybean.sub %>% select(-c(X9_mean, X18_mean, X19_mean, X27_mean,
+                                            X28_mean,  X29_mean, X36_mean,  X37_mean, X38_mean,
+                                            X39_mean, X45_mean,  X46_mean, X47_mean,  X48_mean,
+                                            X49_mean,  X54_mean, X55_mean,  X56_mean, X57_mean,
+                                            X58_mean, X59_mean,  X63_mean, X64_mean,  X65_mean, 
+                                            X66_mean,  X67_mean, X68_mean,  X69_mean, X72_mean, 
+                                            X73_mean, X74_mean,  X75_mean, X76_mean,  X77_mean,
+                                            X78_mean,  X79_mean, X81_mean, X82_mean,  X83_mean,
+                                            X84_mean, X85_mean, X86_mean,  X87_mean, X88_mean,
+                                            X89_mean))
+
+# # Split the data into training and test set
+set.seed(123)
+training.samples <- drybean.reduced$kgha %>%
+  createDataPartition(p = 0.8, list = FALSE)
+train.data  <- drybean.reduced[training.samples, ]
+test.data <- drybean.reduced[-training.samples, ]
+
+
+# create a multiple regression model using all predictors
+lm.fit <- lm(kgha ~ ., data = train.data)
+summary(lm.fit)
+
+# predict using test data
+predictions <- lm.fit %>% predict(test.data)
+
+# compute R MSE
+RMSE <- RMSE(predictions, test.data$kgha)
+
+
+# compute R-square
+R2 <- R2(predictions, test.data$kgha)
+
+# return results
+print(paste("RMSE = ", RMSE))
+print(paste("R-squared value is:", R2))
+
+# par(mfrow=c(2,2))
+# plot(lm.fit)
+
+# check for normality 
+# library(fBasics)
+# library(lmtest)
+
+# jarqueberaTest(lm.fit$residuals)
+# dwtest(lm.fit)
+
+# run a linear model fit and see if there are some really collinear variables
+# due to the nature of the hyperspectral indices, there are many colinear variables
+# present in the dataset. lets remove some of those.
+# lm.fit <- lm(kgha ~ ., data = drybean.sub[,2:ncol(drybean.sub)])
+# summary(lm.fit)
+
+# 
+# # #
+# library(corrplot)
+# x <-cor(train.data[, 2:ncol(train.data)])
+# print(x)
+
+# # corrplot(x, type="upper", order="hclust")
+# 
+
+
+```
+
+```{r}
+#####################################################################################################
+# predicting emergence
+drybean.sub <- drybean %>%
+  select(em, ends_with("_mean")) %>%
+  na.omit()
+
+
+# where are the coefficients NA. We will remove these from the model
+drybean.reduced <- drybean.sub %>% select(-c(X9_mean, X18_mean, X19_mean, X27_mean,
+                                            X28_mean,  X29_mean, X36_mean,  X37_mean, X38_mean,
+                                            X39_mean, X45_mean,  X46_mean, X47_mean,  X48_mean,
+                                            X49_mean,  X54_mean, X55_mean,  X56_mean, X57_mean,
+                                            X58_mean, X59_mean,  X63_mean, X64_mean,  X65_mean, 
+                                            X66_mean,  X67_mean, X68_mean,  X69_mean, X72_mean, 
+                                            X73_mean, X74_mean,  X75_mean, X76_mean,  X77_mean,
+                                            X78_mean,  X79_mean, X81_mean, X82_mean,  X83_mean,
+                                            X84_mean, X85_mean, X86_mean,  X87_mean, X88_mean,
+                                            X89_mean))
+
+# run a linear model fit and see if there are some really collinear variables
+# due to the nature of the hyperspectral indices, there are many colinear variables
+# present in the dataset. lets remove some of those.
+#lm.fit <- lm(em ~ ., data = drybean.sub[,2:ncol(drybean.sub)])
+#summary(lm.fit)
+
+# # Split the data into training and test set
+set.seed(123)
+training.samples <- drybean.reduced$em %>%
+  createDataPartition(p = 0.8, list = FALSE)
+train.data  <- drybean.reduced[training.samples, ]
+test.data <- drybean.reduced[-training.samples, ]
+
+# create a multiple regression model using all predictors
+lm.fit <- lm(em ~ ., data = train.data)
+summary(lm.fit)
+
+
+# predict using test data
+predictions <- lm.fit %>% predict(test.data)
+
+# compute R MSE
+RMSE <- RMSE(predictions, test.data$em)
+
+# compute R-square
+R2 <- R2(predictions, test.data$em)
+
+# return results
+print(paste("RMSE = ", RMSE))
+print(paste("R-squared value is:", R2))
+
+```
+
+
+```{r}
+
+#####################################################################################################
+# predicting 100 seed weight
+drybean.sub <- drybean %>%
+  select(sdwt, ends_with("_mean")) %>%
+  na.omit()
+
+
+# where are the coefficients NA. We will remove these from the model
+drybean.reduced <- drybean.sub %>% select(-c(X9_mean, X18_mean, X19_mean, X27_mean,
+                                            X28_mean,  X29_mean, X36_mean,  X37_mean, X38_mean,
+                                            X39_mean, X45_mean,  X46_mean, X47_mean,  X48_mean,
+                                            X49_mean,  X54_mean, X55_mean,  X56_mean, X57_mean,
+                                            X58_mean, X59_mean,  X63_mean, X64_mean,  X65_mean, 
+                                            X66_mean,  X67_mean, X68_mean,  X69_mean, X72_mean, 
+                                            X73_mean, X74_mean,  X75_mean, X76_mean,  X77_mean,
+                                            X78_mean,  X79_mean, X81_mean, X82_mean,  X83_mean,
+                                            X84_mean, X85_mean, X86_mean,  X87_mean, X88_mean,
+                                            X89_mean))
+
+# run a linear model fit and see if there are some really collinear variables
+# due to the nature of the hyperspectral indices, there are many colinear variables
+# present in the dataset. lets remove some of those.
+#lm.fit <- lm(em ~ ., data = drybean.sub[,2:ncol(drybean.sub)])
+#summary(lm.fit)
+
+# # Split the data into training and test set
+set.seed(123)
+training.samples <- drybean.reduced$sdwt %>%
+  createDataPartition(p = 0.8, list = FALSE)
+train.data  <- drybean.reduced[training.samples, ]
+test.data <- drybean.reduced[-training.samples, ]
+
+# create a multiple regression model using all predictors
+lm.fit <- lm(sdwt ~ ., data = train.data)
+summary(lm.fit)
+
+
+# predict using test data
+predictions <- lm.fit %>% predict(test.data)
+
+# compute R MSE
+RMSE <- RMSE(predictions, test.data$sdwt)
+
+# compute R-square
+R2 <- R2(predictions, test.data$sdwt)
+
+# return results
+print(paste("RMSE = ", RMSE))
+print(paste("R-squared value is:", R2))
+
+```
+
+```{r}
+#####################################################################################################
+# predicting hm
+drybean.sub <- drybean %>%
+  select(hm, ends_with("_mean")) %>%
+  na.omit()
+
+
+# where are the coefficients NA. We will remove these from the model
+drybean.reduced <- drybean.sub %>% select(-c(X9_mean, X18_mean, X19_mean, X27_mean,
+                                            X28_mean,  X29_mean, X36_mean,  X37_mean, X38_mean,
+                                            X39_mean, X45_mean,  X46_mean, X47_mean,  X48_mean,
+                                            X49_mean,  X54_mean, X55_mean,  X56_mean, X57_mean,
+                                            X58_mean, X59_mean,  X63_mean, X64_mean,  X65_mean, 
+                                            X66_mean,  X67_mean, X68_mean,  X69_mean, X72_mean, 
+                                            X73_mean, X74_mean,  X75_mean, X76_mean,  X77_mean,
+                                            X78_mean,  X79_mean, X81_mean, X82_mean,  X83_mean,
+                                            X84_mean, X85_mean, X86_mean,  X87_mean, X88_mean,
+                                            X89_mean))
+
+# run a linear model fit and see if there are some really collinear variables
+# due to the nature of the hyperspectral indices, there are many colinear variables
+# present in the dataset. lets remove some of those.
+#lm.fit <- lm(em ~ ., data = drybean.sub[,2:ncol(drybean.sub)])
+#summary(lm.fit)
+
+# # Split the data into training and test set
+set.seed(123)
+training.samples <- drybean.reduced$hm %>%
+  createDataPartition(p = 0.8, list = FALSE)
+train.data  <- drybean.reduced[training.samples, ]
+test.data <- drybean.reduced[-training.samples, ]
+
+# create a multiple regression model using all predictors
+lm.fit <- lm(hm ~ ., data = train.data)
+summary(lm.fit)
+
+
+# predict using test data
+predictions <- lm.fit %>% predict(test.data)
+
+# compute R MSE
+RMSE <- RMSE(predictions, test.data$hm)
+
+# compute R-square
+R2 <- R2(predictions, test.data$hm)
+
+# return results
+print(paste("RMSE = ", RMSE))
+print(paste("R-squared value is:", R2))
+```
+
