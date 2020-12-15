@@ -1,0 +1,6 @@
+"0","```r
+plot(qfit.lstat)
+
+qfit.medv <- lm(crim ~ poly(medv, 3))
+par(mfrow=c(2,2))
+```"

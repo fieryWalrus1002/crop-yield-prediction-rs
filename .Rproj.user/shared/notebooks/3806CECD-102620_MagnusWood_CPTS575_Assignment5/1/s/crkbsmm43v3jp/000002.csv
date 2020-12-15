@@ -1,0 +1,9 @@
+"0","```r
+
+qfit.zn <- lm(crim ~ poly(zn, 3))
+par(mfrow=c(2,2))
+plot(qfit.zn)
+
+qfit.indus <- lm(crim ~ poly(indus, 3))
+par(mfrow=c(2,2))
+```"

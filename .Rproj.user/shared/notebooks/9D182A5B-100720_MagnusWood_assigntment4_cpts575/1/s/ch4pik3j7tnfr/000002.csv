@@ -1,0 +1,18 @@
+"0","```r
+# produce a map
+# plot each destination airport
+# color of points will be average air time of its incoming flights
+flights3 %>%
+  group_by(dest) %>%
+  ggplot(aes(x = lon, y = lat, color = air_time)) +
+  theme_bw() +
+  borders(\"state\") + 
+  geom_point() + 
+  scale_color_gradient(low = \"#00FF00\", high = \"#FF0000\", guide = \"colorbar\") +
+  coord_quickmap() +
+  ggtitle(\"Mean air time to destination airports from NYC\") +
+  xlab(\"Longitude\") +
+  ylab(\"Latitude\") +
+  labs(color = \"Air time (minutes)\")
+
+```"

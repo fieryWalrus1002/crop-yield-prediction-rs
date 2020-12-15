@@ -1,0 +1,8 @@
+"0","```r
+# get origin and dest from flights, lat and lon from airports and join with semi_join to get rid of non-matching values
+flights3 <- flights %>% 
+  semi_join(airports, by = c(\"dest\" = \"faa\")) %>%
+  left_join(airports, by = c(\"dest\" = \"faa\")) 
+   
+count(flights3)
+```"

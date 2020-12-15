@@ -1,0 +1,526 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={dry bean prediction project},
+  pdfauthor={Magnus WOod},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{dry bean prediction project}
+\author{Magnus WOod}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# load libraries}
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.3.2     v purrr   0.3.4
+## v tibble  3.0.4     v dplyr   1.0.2
+## v tidyr   1.1.2     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.0
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(broom)}
+\KeywordTok{library}\NormalTok{(knitr)}
+\KeywordTok{library}\NormalTok{(ggfortify)}
+\KeywordTok{library}\NormalTok{(caret)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: lattice
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'caret'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     lift
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(glmnet)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: Matrix
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'Matrix'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:tidyr':
+## 
+##     expand, pack, unpack
+\end{verbatim}
+
+\begin{verbatim}
+## Loaded glmnet 4.0-2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# #local data location}
+\CommentTok{# data_path <- "Bean_Othello_Jul21_M10_transparent_reflectance_hyperindices.csv"}
+
+\CommentTok{# import the data, available via github}
+\NormalTok{data_path <-}\StringTok{ "https://raw.githubusercontent.com/fieryWalrus1002/crop-yield-prediction-rs/main/Bean_Othello_Jul21_M10_transparent_reflectance_hyperindices.csv"}
+
+
+\NormalTok{drybean <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(data_path)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# predicting YIELD}
+\NormalTok{drybean.sub <-}\StringTok{ }\NormalTok{drybean }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(kgha, }\KeywordTok{ends_with}\NormalTok{(}\StringTok{"_mean"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{na.omit}\NormalTok{()}
+
+
+
+
+\CommentTok{# where are the coefficients NA. We will remove these from the model}
+\NormalTok{drybean.reduced <-}\StringTok{ }\NormalTok{drybean.sub }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\KeywordTok{c}\NormalTok{(X9_mean, X18_mean, X19_mean, X27_mean,}
+\NormalTok{                                            X28_mean,  X29_mean, X36_mean,  X37_mean, X38_mean,}
+\NormalTok{                                            X39_mean, X45_mean,  X46_mean, X47_mean,  X48_mean,}
+\NormalTok{                                            X49_mean,  X54_mean, X55_mean,  X56_mean, X57_mean,}
+\NormalTok{                                            X58_mean, X59_mean,  X63_mean, X64_mean,  X65_mean, }
+\NormalTok{                                            X66_mean,  X67_mean, X68_mean,  X69_mean, X72_mean, }
+\NormalTok{                                            X73_mean, X74_mean,  X75_mean, X76_mean,  X77_mean,}
+\NormalTok{                                            X78_mean,  X79_mean, X81_mean, X82_mean,  X83_mean,}
+\NormalTok{                                            X84_mean, X85_mean, X86_mean,  X87_mean, X88_mean,}
+\NormalTok{                                            X89_mean))}
+
+\CommentTok{# # Split the data into training and test set}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{training.samples <-}\StringTok{ }\NormalTok{drybean.reduced}\OperatorTok{$}\NormalTok{kgha }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{createDataPartition}\NormalTok{(}\DataTypeTok{p =} \FloatTok{0.8}\NormalTok{, }\DataTypeTok{list =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{train.data  <-}\StringTok{ }\NormalTok{drybean.reduced[training.samples, ]}
+\NormalTok{test.data <-}\StringTok{ }\NormalTok{drybean.reduced[}\OperatorTok{-}\NormalTok{training.samples, ]}
+
+
+\CommentTok{# create a multiple regression model using all predictors}
+\NormalTok{lm.fit <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(kgha }\OperatorTok{~}\StringTok{ }\NormalTok{., }\DataTypeTok{data =}\NormalTok{ train.data)}
+\KeywordTok{summary}\NormalTok{(lm.fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = kgha ~ ., data = train.data)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -964.1 -143.5   -0.6  160.4  646.8 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)  
+## (Intercept)     2642       1142   2.312   0.0250 *
+## X0_mean     -1331243     814824  -1.634   0.1087  
+## X1_mean      2386110    3194943   0.747   0.4587  
+## X2_mean     -2078468    3577648  -0.581   0.5639  
+## X3_mean       120035     999554   0.120   0.9049  
+## X4_mean      1095182     949443   1.153   0.2543  
+## X5_mean     -2675778    3297591  -0.811   0.4210  
+## X6_mean     -4435222    2592291  -1.711   0.0934 .
+## X7_mean      1779366    1165548   1.527   0.1333  
+## X8_mean      5373635    3626697   1.482   0.1448  
+## X10_mean    -1660153    3043775  -0.545   0.5879  
+## X11_mean     2018519    3249952   0.621   0.5374  
+## X12_mean     -400806     923041  -0.434   0.6660  
+## X13_mean    -1512930    1316345  -1.149   0.2560  
+## X14_mean     1492460    2888840   0.517   0.6077  
+## X15_mean    -3433711    2247103  -1.528   0.1329  
+## X16_mean     1897058    1289745   1.471   0.1477  
+## X17_mean      179015    3115759   0.057   0.9544  
+## X20_mean    -9577158    9334788  -1.026   0.3099  
+## X21_mean     1363448    7317764   0.186   0.8530  
+## X22_mean     1268159   15290235   0.083   0.9342  
+## X23_mean     -816647    5871003  -0.139   0.8899  
+## X24_mean     8329807    5898761   1.412   0.1642  
+## X25_mean     3122562    4576069   0.682   0.4982  
+## X26_mean    -1203873    6062508  -0.199   0.8434  
+## X30_mean      629957    8356684   0.075   0.9402  
+## X31_mean    -2563666   15734028  -0.163   0.8712  
+## X32_mean    -4658682    7068678  -0.659   0.5129  
+## X33_mean    -5483853    6203708  -0.884   0.3810  
+## X34_mean    -4955095    5136129  -0.965   0.3394  
+## X35_mean     5265528    7405717   0.711   0.4804  
+## X40_mean     2764796    2480929   1.114   0.2705  
+## X41_mean     2260522    2319538   0.975   0.3346  
+## X42_mean     1522409    2111482   0.721   0.4743  
+## X43_mean    -2328690    2014857  -1.156   0.2534  
+## X44_mean    -2346326    2261685  -1.037   0.3046  
+## X50_mean     1279433    3172303   0.403   0.6885  
+## X51_mean     2787904    2853295   0.977   0.3333  
+## X52_mean      102781    2710721   0.038   0.9699  
+## X53_mean    -2939666    2734663  -1.075   0.2877  
+## X60_mean    -9399504    6331442  -1.485   0.1441  
+## X61_mean     3147672    3088285   1.019   0.3131  
+## X62_mean     4693086    3614450   1.298   0.2002  
+## X70_mean      292218    2584073   0.113   0.9104  
+## X71_mean    -7811433    5846909  -1.336   0.1877  
+## X80_mean     1702707    3292147   0.517   0.6073  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 367.7 on 49 degrees of freedom
+## Multiple R-squared:  0.7831, Adjusted R-squared:  0.584 
+## F-statistic: 3.932 on 45 and 49 DF,  p-value: 2.756e-06
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# predict using test data}
+\NormalTok{predictions <-}\StringTok{ }\NormalTok{lm.fit }\OperatorTok{%>%}\StringTok{ }\KeywordTok{predict}\NormalTok{(test.data)}
+
+\CommentTok{# compute R MSE}
+\NormalTok{RMSE <-}\StringTok{ }\KeywordTok{RMSE}\NormalTok{(predictions, test.data}\OperatorTok{$}\NormalTok{kgha)}
+
+
+\CommentTok{# compute R-square}
+\NormalTok{R2 <-}\StringTok{ }\KeywordTok{R2}\NormalTok{(predictions, test.data}\OperatorTok{$}\NormalTok{kgha)}
+
+\CommentTok{# return results}
+\KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"RMSE = "}\NormalTok{, RMSE))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "RMSE =  496.218800229783"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"R-squared value is:"}\NormalTok{, R2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "R-squared value is: 0.351117314743734"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# par(mfrow=c(2,2))}
+\CommentTok{# plot(lm.fit)}
+
+\CommentTok{# check for normality }
+\CommentTok{# library(fBasics)}
+\CommentTok{# library(lmtest)}
+
+\CommentTok{# jarqueberaTest(lm.fit$residuals)}
+\CommentTok{# dwtest(lm.fit)}
+
+\CommentTok{# run a linear model fit and see if there are some really collinear variables}
+\CommentTok{# due to the nature of the hyperspectral indices, there are many colinear variables}
+\CommentTok{# present in the dataset. lets remove some of those.}
+\CommentTok{# lm.fit <- lm(kgha ~ ., data = drybean.sub[,2:ncol(drybean.sub)])}
+\CommentTok{# summary(lm.fit)}
+
+\CommentTok{# }
+\CommentTok{# # #}
+\CommentTok{# library(corrplot)}
+\CommentTok{# x <-cor(train.data[, 2:ncol(train.data)])}
+\CommentTok{# print(x)}
+
+\CommentTok{# # corrplot(x, type="upper", order="hclust")}
+\CommentTok{# }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# LASSO regression with glmnet}
+\CommentTok{#####################################################################################################}
+\CommentTok{# import the data}
+\NormalTok{drybean <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"Bean_Othello_Jul21_M10_transparent_reflectance_hyperindices.csv"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{na.omit}\NormalTok{()}
+
+\CommentTok{# predicting YIELD}
+\NormalTok{drybean.sub <-}\StringTok{ }\NormalTok{drybean }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(kgha, }\KeywordTok{ends_with}\NormalTok{(}\StringTok{"_mean"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{na.omit}\NormalTok{()}
+
+\CommentTok{# # where are the coefficients NA. We will remove these from the model}
+\NormalTok{drybean.sub <-}\StringTok{ }\NormalTok{drybean.sub }\OperatorTok{%>%}\StringTok{ }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\KeywordTok{c}\NormalTok{(X9_mean, X18_mean, X19_mean, X27_mean,}
+\NormalTok{                                            X28_mean,  X29_mean, X36_mean,  X37_mean, X38_mean,}
+\NormalTok{                                            X39_mean, X45_mean,  X46_mean, X47_mean,  X48_mean,}
+\NormalTok{                                            X49_mean,  X54_mean, X55_mean,  X56_mean, X57_mean,}
+\NormalTok{                                            X58_mean, X59_mean,  X63_mean, X64_mean,  X65_mean,}
+\NormalTok{                                            X66_mean,  X67_mean, X68_mean,  X69_mean, X72_mean,}
+\NormalTok{                                            X73_mean, X74_mean,  X75_mean, X76_mean,  X77_mean,}
+\NormalTok{                                            X78_mean,  X79_mean, X81_mean, X82_mean,  X83_mean,}
+\NormalTok{                                            X84_mean, X85_mean, X86_mean,  X87_mean, X88_mean,}
+\NormalTok{                                            X89_mean))}
+
+
+\CommentTok{# # Split the data into training and test set}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+
+\NormalTok{training.samples <-}\StringTok{ }\NormalTok{drybean.sub}\OperatorTok{$}\NormalTok{kgha }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{createDataPartition}\NormalTok{(}\DataTypeTok{p =} \FloatTok{0.8}\NormalTok{, }\DataTypeTok{list =} \OtherTok{FALSE}\NormalTok{)}
+
+\NormalTok{train.data  <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(drybean.sub[training.samples, ])}
+\NormalTok{train.x <-}\StringTok{ }\NormalTok{train.data[,}\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(train.data)]}
+\NormalTok{train.y <-}\StringTok{ }\NormalTok{train.data[,}\DecValTok{1}\NormalTok{]}
+
+\NormalTok{test.data <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(drybean.sub[}\OperatorTok{-}\NormalTok{training.samples, ])}
+\NormalTok{test.x <-}\StringTok{ }\NormalTok{test.data[,}\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(test.data)]}
+\NormalTok{test.y <-}\StringTok{ }\NormalTok{test.data[,}\DecValTok{1}\NormalTok{]}
+
+
+\CommentTok{# LASSO regression model, Least Absolutel Shrinkage and Selection Operator}
+\CommentTok{# in the glmnet library}
+\NormalTok{lambda_seq <-}\StringTok{ }\DecValTok{10}\OperatorTok{^}\KeywordTok{seq}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{-2}\NormalTok{, }\DataTypeTok{by =} \FloatTok{-.1}\NormalTok{)}
+
+
+\CommentTok{# cvfit <- cv.glmnet(, alpha = 1, lambda = lambda_seq,}
+\CommentTok{#                        nfolds = 10)}
+\NormalTok{cvfit <-}\StringTok{ }\KeywordTok{cv.glmnet}\NormalTok{(train.x, train.y, }\DataTypeTok{type.measure =} \StringTok{"mse"}\NormalTok{, }\DataTypeTok{nfolds =} \DecValTok{20}\NormalTok{)}
+
+
+\NormalTok{best_lam <-}\StringTok{ }\NormalTok{cvfit}\OperatorTok{$}\NormalTok{lambda.min}
+\NormalTok{best_lam}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 25.8951
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# build the model with the best lambda value}
+\NormalTok{lasso_best <-}\StringTok{ }\KeywordTok{glmnet}\NormalTok{(train.x, train.y, }\DataTypeTok{alpha =} \DecValTok{1}\NormalTok{, }\DataTypeTok{lambda =}\NormalTok{ best_lam)}
+
+\CommentTok{# make predictions}
+\NormalTok{pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(lasso_best, }\DataTypeTok{s =}\NormalTok{ best_lam, }\DataTypeTok{newx =}\NormalTok{ test.x)}
+\NormalTok{final <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(test.y, pred)}
+
+\CommentTok{# check the first few}
+\KeywordTok{head}\NormalTok{(final)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    test.y        1
+## 5  3269.2 4154.759
+## 8  4838.5 4478.994
+## 15 4160.1 3463.785
+## 33 3679.5 3823.333
+## 41 4272.9 4305.742
+## 44 4019.4 4290.361
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# # compute R MSE}
+\NormalTok{RMSE <-}\StringTok{ }\KeywordTok{RMSE}\NormalTok{(pred, test.y)}
+
+\CommentTok{# }
+\CommentTok{# # compute R-square}
+\NormalTok{R2 <-}\StringTok{ }\KeywordTok{R2}\NormalTok{(pred, test.y)}
+
+\CommentTok{# return results}
+\KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"RMSE = "}\NormalTok{, RMSE))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "RMSE =  515.758459807275"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"R-squared value is:"}\NormalTok{, R2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "R-squared value is: 0.219827238383539"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# inspect the coefficients}
+\KeywordTok{coef}\NormalTok{(lasso_best)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 46 x 1 sparse Matrix of class "dgCMatrix"
+##                      s0
+## (Intercept) -13294.6337
+## X0_mean          .     
+## X1_mean          .     
+## X2_mean          .     
+## X3_mean       4338.7365
+## X4_mean          .     
+## X5_mean          .     
+## X6_mean          .     
+## X7_mean          .     
+## X8_mean          .     
+## X10_mean         .     
+## X11_mean         .     
+## X12_mean         .     
+## X13_mean         .     
+## X14_mean    -21536.5872
+## X15_mean         .     
+## X16_mean         .     
+## X17_mean         .     
+## X20_mean         .     
+## X21_mean      1984.1620
+## X22_mean         .     
+## X23_mean         .     
+## X24_mean         .     
+## X25_mean         .     
+## X26_mean         .     
+## X30_mean         .     
+## X31_mean         .     
+## X32_mean         .     
+## X33_mean         .     
+## X34_mean         .     
+## X35_mean         .     
+## X40_mean     -3628.7031
+## X41_mean         .     
+## X42_mean         .     
+## X43_mean      -773.3544
+## X44_mean         .     
+## X50_mean         .     
+## X51_mean         .     
+## X52_mean         .     
+## X53_mean         .     
+## X60_mean         .     
+## X61_mean         .     
+## X62_mean         .     
+## X70_mean         .     
+## X71_mean         .     
+## X80_mean         .
+\end{verbatim}
+
+\end{document}

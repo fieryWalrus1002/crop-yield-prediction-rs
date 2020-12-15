@@ -1,0 +1,6 @@
+"0","```r
+plot(qfit.indus)
+
+qfit.chas <- lm(crim ~ poly(chas, 1))
+par(mfrow=c(2,2))
+```"

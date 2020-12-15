@@ -1,0 +1,5 @@
+"0","```r
+# use the plot function on the linear model to produce the diagnostic plots
+par(mfrow=c(2,2))
+plot(lm.fit)
+```"

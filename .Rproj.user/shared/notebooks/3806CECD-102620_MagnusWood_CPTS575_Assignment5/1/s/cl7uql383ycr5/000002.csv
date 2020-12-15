@@ -1,0 +1,41 @@
+"0","```r
+# create a multiple regression model using all predictors
+lm.fit3 <- lm(formula = crim ~ zn + indus + chas + nox + rm + age + dis + rad + tax + ptratio + black + lstat + medv, data = Boston)
+summary(lm.fit3)
+```"
+"1","
+Call:
+lm(formula = crim ~ zn + indus + chas + nox + rm + age + dis + 
+    rad + tax + ptratio + black + lstat + medv, data = Boston)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-9.924 -2.120 -0.353  1.019 75.051 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  17.033228   7.234903   2.354 0.018949 *  
+zn            0.044855   0.018734   2.394 0.017025 *  
+indus        -0.063855   0.083407  -0.766 0.444294    
+chas         -0.749134   1.180147  -0.635 0.525867    
+nox         -10.313535   5.275536  -1.955 0.051152 .  
+rm            0.430131   0.612830   0.702 0.483089    
+age           0.001452   0.017925   0.081 0.935488    
+dis          -0.987176   0.281817  -3.503 0.000502 ***
+rad           0.588209   0.088049   6.680 6.46e-11 ***
+tax          -0.003780   0.005156  -0.733 0.463793    
+ptratio      -0.271081   0.186450  -1.454 0.146611    
+black        -0.007538   0.003673  -2.052 0.040702 *  
+lstat         0.126211   0.075725   1.667 0.096208 .  
+medv         -0.198887   0.060516  -3.287 0.001087 ** 
+---
+Signif. codes:  0 â€˜***â€™ 0.001 â€˜**â€™ 0.01 â€˜*â€™ 0.05 â€˜.â€™ 0.1 â€˜ â€™ 1
+
+Residual standard error: 6.439 on 492 degrees of freedom
+Multiple R-squared:  0.454,	Adjusted R-squared:  0.4396 
+F-statistic: 31.47 on 13 and 492 DF,  p-value: < 2.2e-16
+"
+"0","```r
+par(mfrow=c(2,2))
+plot(lm.fit)
+```"

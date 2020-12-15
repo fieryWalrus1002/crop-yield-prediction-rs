@@ -1,0 +1,5 @@
+"0","```r
+
+flights4 <- flights3 %>%
+  group_by(origin, dest) %>% count() %>% print()
+```"

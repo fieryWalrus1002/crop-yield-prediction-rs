@@ -1,0 +1,6 @@
+"0","```r
+plot(qfit.dis)
+
+qfit.rad <- lm(crim ~ poly(rad, 3))
+par(mfrow=c(2,2))
+```"

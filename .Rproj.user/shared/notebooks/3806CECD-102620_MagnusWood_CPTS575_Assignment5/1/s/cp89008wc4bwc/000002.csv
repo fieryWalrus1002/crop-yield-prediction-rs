@@ -1,0 +1,6 @@
+"0","```r
+#library(\"MASS\")
+Boston <- MASS::Boston
+attach(Boston)
+head(Boston)
+```"

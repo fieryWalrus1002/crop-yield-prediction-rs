@@ -1,0 +1,5 @@
+"0","```r
+
+join2 <- anti_join(airports,flights,by=c(\"faa\"=\"dest\"))
+head(join2)
+```"

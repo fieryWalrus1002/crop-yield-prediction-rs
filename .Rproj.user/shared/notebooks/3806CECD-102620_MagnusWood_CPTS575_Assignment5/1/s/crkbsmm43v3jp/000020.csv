@@ -1,0 +1,6 @@
+"0","```r
+plot(qfit.ptratio)
+
+qfit.black <- lm(crim ~ poly(black, 3))
+par(mfrow=c(2,2))
+```"

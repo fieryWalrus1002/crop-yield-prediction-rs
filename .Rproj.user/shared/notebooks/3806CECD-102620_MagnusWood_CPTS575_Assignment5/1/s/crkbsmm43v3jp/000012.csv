@@ -1,0 +1,6 @@
+"0","```r
+plot(qfit.age)
+
+qfit.dis <- lm(crim ~ poly(dis, 3))
+par(mfrow=c(2,2))
+```"

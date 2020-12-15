@@ -1,0 +1,25 @@
+"0","```r
+# import a text document I made from the article at 
+# https://www.popularmechanics.com/technology/a15615/how-eddie-van-halen-hacks-a-guitar/?utm_source=pocket-newtab
+library(\"wordcloud\")
+library(\"wordcloud2\")
+library(\"tm\")
+
+text <- readLines(\"vanhalen.txt\")
+
+docs <- Corpus(VectorSource(text))
+
+docs <- docs %>%
+  tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(stripWhitespace)
+docs <- tm_map(docs, content_transformer(tolower))
+docs <- tm_map(docs, removeWords, stopwords(\"english\"))
+
+dtm <- TermDocumentMatrix(docs) 
+matrix <- as.matrix(dtm) 
+words <- sort(rowSums(matrix),decreasing=TRUE) 
+df <- data.frame(word = names(words),freq=words)
+
+wordcloud2(data=df, size=.7, color='random-dark')
+```"

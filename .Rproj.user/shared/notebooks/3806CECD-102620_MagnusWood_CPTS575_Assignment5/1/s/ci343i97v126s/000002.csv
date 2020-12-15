@@ -1,0 +1,75 @@
+"0","```r
+help(Boston, package=MASS)
+library(Hmisc)
+# crim   : per capita crime rate
+# zn     : proportion of res land zone for lots over 25k sqft
+# indus  : prop of non-retail business acres per town
+# chas   : Charles River dummy variable (1 if tract bounds riv, 0 otherwise)
+# nox    : nitrogen oxides concentration (10 parts per million)
+# rm     : average num rooms per dwelling
+# age    : porpo of owner-occupeid units built prior to 1940
+# dis    : weight mean of distances to five Boston employment centres
+# rad    : index of accessibility to radial highway
+# tax    : full-value property tax rate per $10k
+# ptratio: pupil-teacher ratio by town
+# black  : 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town.
+# lstat  : lower status of the population (percent)
+# medv   : median value of owener-occupied homes in $1000s
+
+# fit a simple linear model for each predictor of per capita crime rate
+lm.zn <- lm(crim ~ zn, data=Boston)
+lm.indus <- lm(crim ~ indus, data=Boston)
+lm.chas <- lm(crim ~ chas, data=Boston)
+lm.nox <- lm(crim ~ nox, data=Boston)
+lm.rm <- lm(crim ~ rm, data=Boston)
+lm.age <- lm(crim ~ age, data=Boston)
+lm.dis <- lm(crim ~ dis, data=Boston)
+lm.rad <- lm(crim ~ rad, data=Boston)
+lm.tax <- lm(crim ~ tax, data=Boston)
+lm.ptratio <- lm(crim ~ ptratio, data=Boston)
+lm.black <- lm(crim ~ black, data=Boston)
+lm.lstat <- lm(crim ~ lstat, data=Boston)
+lm.medv <- lm(crim ~ medv, data=Boston)
+
+
+summary(lm.zn)
+```"
+"0","```r
+summary(lm.indus)
+```"
+"0","```r
+summary(lm.chas)
+```"
+"0","```r
+summary(lm.nox)
+```"
+"0","```r
+summary(lm.rm)
+```"
+"0","```r
+summary(lm.age)
+```"
+"0","```r
+summary(lm.age)
+```"
+"0","```r
+summary(lm.dis)
+```"
+"0","```r
+summary(lm.rad)
+```"
+"0","```r
+summary(lm.tax)
+```"
+"0","```r
+summary(lm.ptratio)
+```"
+"0","```r
+summary(lm.black)
+```"
+"0","```r
+summary(lm.lstat)
+```"
+"0","```r
+summary(lm.medv)
+```"

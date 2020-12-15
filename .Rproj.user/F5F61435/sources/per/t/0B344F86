@@ -1,0 +1,25 @@
+{
+    "id": "0B344F86",
+    "path": "E:/data/crop-yield-prediction-rs/modeling_hyperindices_yield.Rmd",
+    "project_path": "modeling_hyperindices_yield.Rmd",
+    "type": "r_markdown",
+    "hash": "1166716334",
+    "contents": "",
+    "dirty": false,
+    "created": 1607964111320.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "chunk_output_type": "inline",
+        "cursorPosition": "458,0",
+        "scrollLine": "450"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1608015836,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1608015836796,
+    "read_only": false,
+    "read_only_alternatives": []
+}

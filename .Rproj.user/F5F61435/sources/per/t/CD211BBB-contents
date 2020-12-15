@@ -1,0 +1,191 @@
+---
+title: "dry bean prediction project"
+author: "Magnus WOod"
+class: CPT_S 575 Data Science
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+
+
+
+```{r}
+# load libraries
+library(tidyverse)
+library(broom)
+library(knitr)
+library(ggfortify)
+library(caret)
+library(glmnet)
+
+# #local data location
+# data_path <- "Bean_Othello_Jul21_M10_transparent_reflectance_hyperindices.csv"
+
+# import the data, available via github
+data_path <- "https://raw.githubusercontent.com/fieryWalrus1002/crop-yield-prediction-rs/main/Bean_Othello_Jul21_M10_transparent_reflectance_hyperindices.csv"
+
+
+drybean <- read.csv(data_path)
+
+
+```
+
+```{r}
+# predicting YIELD
+drybean.sub <- drybean %>%
+  select(kgha, ends_with("_mean")) %>%
+  na.omit()
+
+
+
+
+# where are the coefficients NA. We will remove these from the model
+drybean.reduced <- drybean.sub %>% select(-c(X9_mean, X18_mean, X19_mean, X27_mean,
+                                            X28_mean,  X29_mean, X36_mean,  X37_mean, X38_mean,
+                                            X39_mean, X45_mean,  X46_mean, X47_mean,  X48_mean,
+                                            X49_mean,  X54_mean, X55_mean,  X56_mean, X57_mean,
+                                            X58_mean, X59_mean,  X63_mean, X64_mean,  X65_mean, 
+                                            X66_mean,  X67_mean, X68_mean,  X69_mean, X72_mean, 
+                                            X73_mean, X74_mean,  X75_mean, X76_mean,  X77_mean,
+                                            X78_mean,  X79_mean, X81_mean, X82_mean,  X83_mean,
+                                            X84_mean, X85_mean, X86_mean,  X87_mean, X88_mean,
+                                            X89_mean))
+
+# # Split the data into training and test set
+set.seed(123)
+training.samples <- drybean.reduced$kgha %>%
+  createDataPartition(p = 0.8, list = FALSE)
+train.data  <- drybean.reduced[training.samples, ]
+test.data <- drybean.reduced[-training.samples, ]
+
+
+# create a multiple regression model using all predictors
+lm.fit <- lm(kgha ~ ., data = train.data)
+summary(lm.fit)
+
+# predict using test data
+predictions <- lm.fit %>% predict(test.data)
+
+# compute R MSE
+RMSE <- RMSE(predictions, test.data$kgha)
+
+
+# compute R-square
+R2 <- R2(predictions, test.data$kgha)
+
+# return results
+print(paste("RMSE = ", RMSE))
+print(paste("R-squared value is:", R2))
+
+# par(mfrow=c(2,2))
+# plot(lm.fit)
+
+# check for normality 
+# library(fBasics)
+# library(lmtest)
+
+# jarqueberaTest(lm.fit$residuals)
+# dwtest(lm.fit)
+
+# run a linear model fit and see if there are some really collinear variables
+# due to the nature of the hyperspectral indices, there are many colinear variables
+# present in the dataset. lets remove some of those.
+# lm.fit <- lm(kgha ~ ., data = drybean.sub[,2:ncol(drybean.sub)])
+# summary(lm.fit)
+
+# 
+# # #
+# library(corrplot)
+# x <-cor(train.data[, 2:ncol(train.data)])
+# print(x)
+
+# # corrplot(x, type="upper", order="hclust")
+# 
+
+
+```
+
+
+```{r}
+# LASSO regression with glmnet
+#####################################################################################################
+# import the data
+drybean <- read.csv("Bean_Othello_Jul21_M10_transparent_reflectance_hyperindices.csv") %>% na.omit()
+
+# predicting YIELD
+drybean.sub <- drybean %>%
+  select(kgha, ends_with("_mean")) %>%
+  na.omit()
+
+# # where are the coefficients NA. We will remove these from the model
+drybean.sub <- drybean.sub %>% select(-c(X9_mean, X18_mean, X19_mean, X27_mean,
+                                            X28_mean,  X29_mean, X36_mean,  X37_mean, X38_mean,
+                                            X39_mean, X45_mean,  X46_mean, X47_mean,  X48_mean,
+                                            X49_mean,  X54_mean, X55_mean,  X56_mean, X57_mean,
+                                            X58_mean, X59_mean,  X63_mean, X64_mean,  X65_mean,
+                                            X66_mean,  X67_mean, X68_mean,  X69_mean, X72_mean,
+                                            X73_mean, X74_mean,  X75_mean, X76_mean,  X77_mean,
+                                            X78_mean,  X79_mean, X81_mean, X82_mean,  X83_mean,
+                                            X84_mean, X85_mean, X86_mean,  X87_mean, X88_mean,
+                                            X89_mean))
+
+
+# # Split the data into training and test set
+set.seed(123)
+
+training.samples <- drybean.sub$kgha %>%
+  createDataPartition(p = 0.8, list = FALSE)
+
+train.data  <- as.matrix(drybean.sub[training.samples, ])
+train.x <- train.data[,2:ncol(train.data)]
+train.y <- train.data[,1]
+
+test.data <- as.matrix(drybean.sub[-training.samples, ])
+test.x <- test.data[,2:ncol(test.data)]
+test.y <- test.data[,1]
+
+
+# LASSO regression model, Least Absolutel Shrinkage and Selection Operator
+# in the glmnet library
+lambda_seq <- 10^seq(2, -2, by = -.1)
+
+
+# cvfit <- cv.glmnet(, alpha = 1, lambda = lambda_seq,
+#                        nfolds = 10)
+cvfit <- cv.glmnet(train.x, train.y, type.measure = "mse", nfolds = 20)
+
+
+best_lam <- cvfit$lambda.min
+best_lam
+
+# build the model with the best lambda value
+lasso_best <- glmnet(train.x, train.y, alpha = 1, lambda = best_lam)
+
+# make predictions
+pred <- predict(lasso_best, s = best_lam, newx = test.x)
+final <- cbind(test.y, pred)
+
+# check the first few
+head(final)
+
+# # compute R MSE
+RMSE <- RMSE(pred, test.y)
+
+# 
+# # compute R-square
+R2 <- R2(pred, test.y)
+
+# return results
+print(paste("RMSE = ", RMSE))
+print(paste("R-squared value is:", R2))
+
+# inspect the coefficients
+coef(lasso_best)
+
+```
+```{r}
+
+```
+

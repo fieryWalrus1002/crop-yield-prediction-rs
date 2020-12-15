@@ -1,0 +1,26 @@
+"0","#NN yield data"
+"0","nn_yield <- read_csv(""NN_predyield.csv"") %>% select(pred_kgha, real_kgha)"
+"2","Missing column names filled in: 'X1' [1]"
+"2","
+[36m--[39m [1m[1mColumn specification[1m[22m [36m------------------------------------------------------------------------------[39m
+cols(
+  X1 = [32mcol_double()[39m,
+  pred_kgha = [32mcol_double()[39m,
+  real_kgha = [32mcol_double()[39m
+)
+
+"
+"0","R2label <- paste(""r^2="", round(0.2573916669505947,4))"
+"0","# computation was done in python, just importing here"
+"0",""
+"0","yield_plot <- nn_yield %>% "
+"0","  ggplot(aes(x=real_kgha, y=pred_kgha)) + "
+"0","  geom_point() +"
+"0","  theme_bw() +"
+"0","  ggtitle(""NN: real kgha vs predicted kgha"") +"
+"0","  ylab(""predicted yield (kgha)"") +"
+"0","  xlab(""yield (kgha)"") +"
+"0","  annotate(geom=""text"", x=5000, y=5000,size=6, color = ""red"", label=R2label)"
+"0",""
+"0",""
+"0","yield_plot"

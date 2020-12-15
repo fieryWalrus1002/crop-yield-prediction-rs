@@ -1,0 +1,5 @@
+"0","```r
+
+what <- data.frame(univ.coeff, multi.coeff)
+print(what)
+```"

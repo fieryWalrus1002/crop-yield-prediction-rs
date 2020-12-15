@@ -7,6 +7,7 @@ output: html_notebook
 
 
 
+
 ```{r}
 # load libraries
 library(tidyverse)
@@ -14,11 +15,15 @@ library(broom)
 library(knitr)
 library(ggfortify)
 library(caret)
-
+library(glmnet)
+library(ggcorrplot)
 # import the data
 drybean <- read.csv("Bean_Othello_Jul21_M10_transparent_reflectance_hyperindices.csv")
 
+
+
 ```
+
 
 ```{r}
 # predicting YIELD
@@ -66,6 +71,24 @@ R2 <- R2(predictions, test.data$kgha)
 # return results
 print(paste("RMSE = ", RMSE))
 print(paste("R-squared value is:", R2))
+R2label <- paste("r^2=", round(R2,4))
+
+# combine the real and predicted values
+lm_yield <- tibble(test.data$kgha, predictions)
+names(lm_yield) <- c("real_kgha", "pred_kgha")
+
+# make a plot of predictions
+yield_plot <- lm_yield %>% 
+  ggplot(aes(x=real_kgha, y=pred_kgha)) + 
+  geom_point() +
+  theme_bw() +
+  ggtitle("lm: real kgha vs predicted kgha") +
+  ylab("predicted yield (kgha)") +
+  xlab("yield (kgha)") +
+  annotate(geom="text", x=5000, y=5000,size=6, color = "red", label=R2label)
+
+yield_plot
+ggsave("lmyieldplot.jpg")
 
 # par(mfrow=c(2,2))
 # plot(lm.fit)
@@ -91,6 +114,39 @@ print(paste("R-squared value is:", R2))
 
 # # corrplot(x, type="upper", order="hclust")
 # 
+
+
+# correlation plot
+corr <- round(cor(drybean.reduced), 1)
+head(corr[,1:6])
+
+# create a mastrix of correlation p-values
+p.mat <- cor_pmat(drybean.reduced)
+
+ggcorrplot(corr,
+           type="upper",
+           hc.order = FALSE,
+           outline.col = "white", 
+           insig="blank", title = "Pearson's correlation among predictor variables", 
+           lab_size= .05,
+           sig.level=0.05, 
+           p.mat = p.mat, 
+           lab=TRUE,
+           digits=3) +
+    theme(axis.text.x = element_text(size = rel(.751), angle=90),
+                  axis.text.y = element_text(size = rel(.751)),
+          panel.grid.minor = element_line(size=20))
+
+ggsave("corrplot.jpg")
+
+# lower triangle
+# variables correlated higher than .3 with kgha
+high_corr <- as.tibble(corr, row.names = TRUE) %>%
+  rowid_to_column(var="rowname") %>%
+  select(rowname, kgha) %>% filter(kgha > .3)
+print(high_corr)
+
+
 
 
 ```
@@ -253,5 +309,153 @@ R2 <- R2(predictions, test.data$hm)
 # return results
 print(paste("RMSE = ", RMSE))
 print(paste("R-squared value is:", R2))
+```
+
+```{r}
+# LASSO regression with glmnet
+#####################################################################################################
+# import the data
+drybean <- read.csv("Bean_Othello_Jul21_M10_transparent_reflectance_hyperindices.csv") %>% na.omit()
+
+# predicting YIELD
+drybean.sub <- drybean %>%
+  select(kgha, ends_with("_mean")) %>%
+  na.omit()
+
+
+
+
+# # where are the coefficients NA. We will remove these from the model
+# drybean.reduced <- drybean.sub %>% select(-c(X9_mean, X18_mean, X19_mean, X27_mean,
+#                                             X28_mean,  X29_mean, X36_mean,  X37_mean, X38_mean,
+#                                             X39_mean, X45_mean,  X46_mean, X47_mean,  X48_mean,
+#                                             X49_mean,  X54_mean, X55_mean,  X56_mean, X57_mean,
+#                                             X58_mean, X59_mean,  X63_mean, X64_mean,  X65_mean, 
+#                                             X66_mean,  X67_mean, X68_mean,  X69_mean, X72_mean, 
+#                                             X73_mean, X74_mean,  X75_mean, X76_mean,  X77_mean,
+#                                             X78_mean,  X79_mean, X81_mean, X82_mean,  X83_mean,
+#                                             X84_mean, X85_mean, X86_mean,  X87_mean, X88_mean,
+#                                             X89_mean))
+
+# # Split the data into training and test set
+set.seed(123)
+
+training.samples <- drybean.sub$kgha %>%
+  createDataPartition(p = 0.8, list = FALSE)
+
+train.data  <- as.matrix(drybean.sub[training.samples, ])
+train.x <- train.data[,2:ncol(train.data)]
+train.y <- train.data[,1]
+
+test.data <- as.matrix(drybean.sub[-training.samples, ])
+test.x <- test.data[,2:ncol(test.data)]
+test.y <- test.data[,1]
+
+
+# LASSO regression model, Least Absolutel Shrinkage and Selection Operator
+# in the glmnet library
+lambda_seq <- 10^seq(2, -2, by = -.1)
+
+
+# cvfit <- cv.glmnet(, alpha = 1, lambda = lambda_seq,
+#                        nfolds = 10)
+cvfit <- cv.glmnet(train.x, train.y, type.measure = "mse", nfolds = 20)
+
+
+best_lam <- cvfit$lambda.min
+best_lam
+
+# build the model with the best lambda value
+lasso_best <- glmnet(train.x, train.y, alpha = 1, lambda = best_lam)
+
+# make predictions
+pred <- predict(lasso_best, s = best_lam, newx = test.x)
+final <- cbind(test.y, pred)
+
+# check the first few
+head(final)
+
+# # compute R MSE
+RMSE <- RMSE(pred, test.y)
+
+# 
+# # compute R-square
+R2 <- R2(pred, test.y)
+
+
+
+
+# return results
+print(paste("RMSE = ", RMSE))
+print(paste("R-squared value is:", round(R2,4)))
+R2label <- paste("r^2=", round(R2,4))
+
+
+# combine the real and predicted values
+glm_yield <- tibble(test.y, pred)
+names(glm_yield) <- c("real_kgha", "pred_kgha")
+
+# make a plot of predictions
+yield_plot <- glm_yield %>% 
+  ggplot(aes(x=real_kgha, y=pred_kgha)) + 
+  geom_point() +
+  theme_bw() +
+  ggtitle("GLM lasso: real kgha vs predicted kgha") +
+  ylab("predicted yield (kgha)") +
+  xlab("yield (kgha)") +
+  annotate(geom="text", x=5000, y=5000,size=6, color = "red", label=R2label)
+
+
+yield_plot
+ggsave("GLMyieldplot.jpg")
+
+# inspect the coefficients
+coef(lasso_best)
+
+# correlation coefficient matrix
+
+
+
+
+```
+```{r}
+y.test <- test.data[1]
+test.data[1]
+
+```
+
+```{r}
+#NN yield data
+nn_yield <- read_csv("NN_predyield.csv") %>% select(pred_kgha, real_kgha)
+R2label <- paste("r^2=", round(0.2573916669505947,4))
+# computation was done in python, just importing here
+
+yield_plot <- nn_yield %>% 
+  ggplot(aes(x=real_kgha, y=pred_kgha)) + 
+  geom_point() +
+  theme_bw() +
+  ggtitle("NN: real kgha vs predicted kgha") +
+  ylab("predicted yield (kgha)") +
+  xlab("yield (kgha)") +
+  annotate(geom="text", x=5000, y=5000,size=6, color = "red", label=R2label)
+
+
+yield_plot
+ggsave("NNyieldplot.jpg")
+
+
+
+
+
+```
+
+```{r}
+#histogram of plot yield
+ggplot(drybean.reduced, aes(x=kgha)) + theme_bw() +
+  geom_histogram(color="darkblue", fill="lightblue") + ggtitle("Histogram of kgha")
+ggsave("yieldhistogram.jpg")
+
+shapiro.test(drybean.reduced$kgha)
+
 ```
 

@@ -1,0 +1,6 @@
+"0","# lower triangle"
+"0","# variables correlated higher than .3 with kgha"
+"0","high_corr <- as.tibble(corr, row.names = TRUE) %>%"
+"0","  rowid_to_column(var=""rowname"") %>%"
+"0","  select(rowname, kgha) %>% filter(kgha > .3)"
+"0","print(high_corr)"

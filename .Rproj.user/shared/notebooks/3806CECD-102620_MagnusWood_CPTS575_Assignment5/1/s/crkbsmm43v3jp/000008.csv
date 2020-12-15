@@ -1,0 +1,6 @@
+"0","```r
+plot(qfit.nox)
+
+qfit.rm <- lm(crim ~ poly(rm, 3))
+par(mfrow=c(2,2))
+```"

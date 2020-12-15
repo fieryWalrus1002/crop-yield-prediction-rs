@@ -1,0 +1,32 @@
+"0","```r
+# took the WarmupData.csv, cleaned it up a bit
+# imported into batchgeo
+# took the exported kml data and ran it through a kml to csv converter I found
+# import the csv
+hometown <- read_csv(\"example.csv\")
+```"
+"1","Parsed with column specification:
+cols(
+  styleUrl = col_character(),
+  name = col_character(),
+  ExtendedData = col_logical(),
+  address = col_character(),
+  longitude = col_double(),
+  latitude = col_double(),
+  altitude = col_double()
+)
+"
+"0","```r
+# produce a map
+# plot each hometown
+hometown %>%
+  ggplot(aes(x = longitude, y = latitude, )) +
+  theme_bw() +
+  borders(\"world\") + 
+  geom_point(color=\"red\", size=3, fill=\"red\", alpha= 3/10) + 
+  coord_quickmap() +
+  ggtitle(\"Where are we from?\") +
+  xlab(\"Longitude\") +
+  ylab(\"Latitude\")
+
+```"

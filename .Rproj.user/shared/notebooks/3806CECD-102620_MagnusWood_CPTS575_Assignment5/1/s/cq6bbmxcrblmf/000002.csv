@@ -1,0 +1,82 @@
+"0","```r
+# interaction effects on the linear model
+lm.fit1 <- lm(formula = mpg ~ cylinders + displacement + horsepower + weight + acceleration + year + origin, data = Auto)
+lm.fit2 <- lm(formula = mpg ~ (cylinders + displacement + horsepower + weight + acceleration + year + origin)^2, data = Auto)
+summary(lm.fit1)
+```"
+"1","
+Call:
+lm(formula = mpg ~ cylinders + displacement + horsepower + weight + 
+    acceleration + year + origin, data = Auto)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.5903 -2.1565 -0.1169  1.8690 13.0604 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  -17.218435   4.644294  -3.707  0.00024 ***
+cylinders     -0.493376   0.323282  -1.526  0.12780    
+displacement   0.019896   0.007515   2.647  0.00844 ** 
+horsepower    -0.016951   0.013787  -1.230  0.21963    
+weight        -0.006474   0.000652  -9.929  < 2e-16 ***
+acceleration   0.080576   0.098845   0.815  0.41548    
+year           0.750773   0.050973  14.729  < 2e-16 ***
+origin         1.426141   0.278136   5.127 4.67e-07 ***
+---
+Signif. codes:  0 â€˜***â€™ 0.001 â€˜**â€™ 0.01 â€˜*â€™ 0.05 â€˜.â€™ 0.1 â€˜ â€™ 1
+
+Residual standard error: 3.328 on 384 degrees of freedom
+Multiple R-squared:  0.8215,	Adjusted R-squared:  0.8182 
+F-statistic: 252.4 on 7 and 384 DF,  p-value: < 2.2e-16
+"
+"0","```r
+summary(lm.fit2)
+```"
+"1","
+Call:
+lm(formula = mpg ~ (cylinders + displacement + horsepower + weight + 
+    acceleration + year + origin)^2, data = Auto)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.6303 -1.4481  0.0596  1.2739 11.1386 
+
+Coefficients:
+                            Estimate Std. Error t value Pr(>|t|)   
+(Intercept)                3.548e+01  5.314e+01   0.668  0.50475   
+cylinders                  6.989e+00  8.248e+00   0.847  0.39738   
+displacement              -4.785e-01  1.894e-01  -2.527  0.01192 * 
+horsepower                 5.034e-01  3.470e-01   1.451  0.14769   
+weight                     4.133e-03  1.759e-02   0.235  0.81442   
+acceleration              -5.859e+00  2.174e+00  -2.696  0.00735 **
+year                       6.974e-01  6.097e-01   1.144  0.25340   
+origin                    -2.090e+01  7.097e+00  -2.944  0.00345 **
+cylinders:displacement    -3.383e-03  6.455e-03  -0.524  0.60051   
+cylinders:horsepower       1.161e-02  2.420e-02   0.480  0.63157   
+cylinders:weight           3.575e-04  8.955e-04   0.399  0.69000   
+cylinders:acceleration     2.779e-01  1.664e-01   1.670  0.09584 . 
+cylinders:year            -1.741e-01  9.714e-02  -1.793  0.07389 . 
+cylinders:origin           4.022e-01  4.926e-01   0.816  0.41482   
+displacement:horsepower   -8.491e-05  2.885e-04  -0.294  0.76867   
+displacement:weight        2.472e-05  1.470e-05   1.682  0.09342 . 
+displacement:acceleration -3.479e-03  3.342e-03  -1.041  0.29853   
+displacement:year          5.934e-03  2.391e-03   2.482  0.01352 * 
+displacement:origin        2.398e-02  1.947e-02   1.232  0.21875   
+horsepower:weight         -1.968e-05  2.924e-05  -0.673  0.50124   
+horsepower:acceleration   -7.213e-03  3.719e-03  -1.939  0.05325 . 
+horsepower:year           -5.838e-03  3.938e-03  -1.482  0.13916   
+horsepower:origin          2.233e-03  2.930e-02   0.076  0.93931   
+weight:acceleration        2.346e-04  2.289e-04   1.025  0.30596   
+weight:year               -2.245e-04  2.127e-04  -1.056  0.29182   
+weight:origin             -5.789e-04  1.591e-03  -0.364  0.71623   
+acceleration:year          5.562e-02  2.558e-02   2.174  0.03033 * 
+acceleration:origin        4.583e-01  1.567e-01   2.926  0.00365 **
+year:origin                1.393e-01  7.399e-02   1.882  0.06062 . 
+---
+Signif. codes:  0 â€˜***â€™ 0.001 â€˜**â€™ 0.01 â€˜*â€™ 0.05 â€˜.â€™ 0.1 â€˜ â€™ 1
+
+Residual standard error: 2.695 on 363 degrees of freedom
+Multiple R-squared:  0.8893,	Adjusted R-squared:  0.8808 
+F-statistic: 104.2 on 28 and 363 DF,  p-value: < 2.2e-16
+"

@@ -1,0 +1,26 @@
+{
+    "id": "CD211BBB",
+    "path": "E:/data/crop-yield-prediction-rs/cropyield_modeling.Rmd",
+    "project_path": "cropyield_modeling.Rmd",
+    "type": "r_markdown",
+    "hash": "2281781406",
+    "contents": "",
+    "dirty": false,
+    "created": 1607968990405.0,
+    "source_on_save": false,
+    "relative_order": 6,
+    "properties": {
+        "tempName": "Untitled1",
+        "chunk_output_type": "inline",
+        "cursorPosition": "181,37",
+        "scrollLine": "128"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1607969393,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1607969393441,
+    "read_only": false,
+    "read_only_alternatives": []
+}

@@ -1,0 +1,21 @@
+"0","```r
+# weather_filtered <- weather %>%
+#   filter(month == 11, day == 1, year == 2013, hour > 12, hour < 17) %>%
+#   select(c(\"origin\", \"humid\", \"month\", \"day\", \"year\",))
+
+
+# filter by the values we need. afternoon is between 12 and 17 imho
+flights2 <- weather %>%
+  # easier to start with weather and filter down to the right time to make the join faster
+  filter(month == 11, day == 1, year == 2013, hour > 12, hour < 17) %>%
+  select(c(\"origin\", \"month\", \"day\", \"year\", \"hour\", \"humid\")) %>%
+  # now join to flights by multiple keys
+  left_join(flights, by = c(\"origin\", \"month\", \"day\", \"year\", \"hour\")) %>%
+  # filter down to just the destination of interest
+  filter(dest == \"TPA\") %>%
+  # and select only the variables of interest
+  select(c(\"tailnum\", \"year\", \"month\", \"day\", \"hour\", \"origin\", \"humid\"))
+
+# now display the flights
+print(flights2)
+```"

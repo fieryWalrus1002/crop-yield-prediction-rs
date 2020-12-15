@@ -1,0 +1,30 @@
+"0","```r
+
+# get the single variate linear model coefficients
+univ.coeff <- c(coef(lm.zn)[2],
+                 coef(lm.indus)[2],
+                 coef(lm.chas)[2],
+                 coef(lm.nox)[2],
+                 coef(lm.rm)[2],
+                 coef(lm.age)[2],
+                 coef(lm.dis)[2],
+                 coef(lm.rad)[2],
+                 coef(lm.tax)[2],
+                 coef(lm.ptratio)[2],
+                 coef(lm.black)[2],
+                 coef(lm.lstat)[2],
+                 coef(lm.medv)[2])
+
+univ.coeff
+```"
+"1","         zn       indus        chas         nox          rm         age         dis         rad         tax     ptratio 
+-0.07393498  0.50977633 -1.89277655 31.24853120 -2.68405122  0.10778623 -1.55090168  0.61791093  0.02974225  1.15198279 
+      black       lstat        medv 
+-0.03627964  0.54880478 -0.36315992 
+"
+"0","```r
+                 
+multi.coeff <- coef(lm.fit3)[2:14]
+
+plot(univ.coeff, multi.coeff)
+```"

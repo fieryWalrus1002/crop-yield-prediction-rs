@@ -1,0 +1,3 @@
+"0","#histogram of plot yield"
+"0","ggplot(drybean.reduced, aes(x=kgha)) + theme_bw() +"
+"0","  geom_histogram(color=""darkblue"", fill=""lightblue"") + ggtitle(""Histogram of kgha"")"
